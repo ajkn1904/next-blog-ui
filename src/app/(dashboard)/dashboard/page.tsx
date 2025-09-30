@@ -1,5 +1,5 @@
 export default function DashboardHome() {
-  const userName = "Tanmoy Parvez";
+  const userName = "Anika Jumana Khanam Nishat";
   const quote = "The secret of getting ahead is getting started. – Mark Twain";
 
   return (

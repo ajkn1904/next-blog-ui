@@ -15,7 +15,7 @@ export const create = async (data: FormData) => {
     isFeatured: Boolean(blogInfo.isFeatured),
   };
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/posts`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

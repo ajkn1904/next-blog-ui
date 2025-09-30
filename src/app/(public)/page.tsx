@@ -3,7 +3,7 @@ import BlogCard from "@/components/modules/Blogs/BlogCard";
 import Hero from "@/components/modules/Home/Hero";
 
 export default async function HomePage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/posts`, {
     next: {
       tags: ["BLOGS"],
     },

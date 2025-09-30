@@ -4,7 +4,7 @@ import { getBlogById } from "@/services/PostServices";
 import React from "react";
 
 export const generateStaticParams = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/post`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/posts`);
   const { data: blogs } = await res.json();
 
   return blogs.slice(0, 2).map((blog: any) => ({
@@ -12,11 +12,7 @@ export const generateStaticParams = async () => {
   }));
 };
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: Promise<{ blogId: string }>;
-}) => {
+export const generateMetadata = async ({ params }: { params: Promise<{ blogId: string }>; }) => {
   const { blogId } = await params;
   const blog = await getBlogById(blogId);
 
@@ -26,11 +22,7 @@ export const generateMetadata = async ({
   };
 };
 
-const BlogDetailsPage = async ({
-  params,
-}: {
-  params: Promise<{ blogId: string }>;
-}) => {
+const BlogDetailsPage = async ({ params }: { params: Promise<{ blogId: string }>; }) => {
   const { blogId } = await params;
 
   const blog = await getBlogById(blogId);
