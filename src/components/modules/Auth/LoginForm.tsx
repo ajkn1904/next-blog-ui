@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
 
 type LoginFormValues = {
   email: string;
@@ -34,6 +35,7 @@ export default function LoginForm() {
 
   const handleSocialLogin = (provider: "google" | "github") => {
     console.log(`Login with ${provider}`);
+    signIn()
   };
 
   return (
@@ -100,6 +102,25 @@ export default function LoginForm() {
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
+            onClick={() => signIn("google", {
+              callbackUrl: "/dashboard"
+            })}
+          >
+            {/* Google */}
+            <Image
+              src="https://img.icons8.com/color/24/google-logo.png"
+              alt="Google"
+              className="w-5 h-5"
+              width={20}
+              height={20}
+            />
+            Login with Google
+          </Button>
+
+          
+          <Button
+            variant="outline"
+            className="flex items-center justify-center gap-2"
             onClick={() => handleSocialLogin("github")}
           >
             {/* GitHub */}
@@ -113,21 +134,6 @@ export default function LoginForm() {
             Login with GitHub
           </Button>
 
-          <Button
-            variant="outline"
-            className="flex items-center justify-center gap-2"
-            onClick={() => handleSocialLogin("google")}
-          >
-            {/* Google */}
-            <Image
-              src="https://img.icons8.com/color/24/google-logo.png"
-              alt="Google"
-              className="w-5 h-5"
-              width={20}
-              height={20}
-            />
-            Login with Google
-          </Button>
         </div>
         <p className="text-center text-sm text-gray-500 mt-4">
           Don’t have an account?{" "}
