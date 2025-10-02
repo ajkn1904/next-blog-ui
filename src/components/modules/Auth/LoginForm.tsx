@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -15,27 +15,41 @@ import {
 } from "@/components/ui/form";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { login } from "@/actions/auth";
+import { toast } from "sonner";
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
+// type LoginFormValues = {
+//   email: string;
+//   password: string;
+// };
 
 export default function LoginForm() {
-  const form = useForm<LoginFormValues>({
+  const form = useForm<FieldValues>({
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log("Login submitted:", values);
+  const onSubmit = async (values: FieldValues) => {
+    try {
+      // const res = await login(values);
+      // if (res?.id) {
+      //   toast.success("User Logged in Successfully");
+      // } else {
+      //   toast.error("User Login Failed");
+      // }
+      signIn("credentials", {
+        ...values,
+        callbackUrl: "/dashboard",
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleSocialLogin = (provider: "google" | "github") => {
     console.log(`Login with ${provider}`);
-    signIn()
   };
 
   return (
@@ -102,25 +116,6 @@ export default function LoginForm() {
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
-            onClick={() => signIn("google", {
-              callbackUrl: "/dashboard"
-            })}
-          >
-            {/* Google */}
-            <Image
-              src="https://img.icons8.com/color/24/google-logo.png"
-              alt="Google"
-              className="w-5 h-5"
-              width={20}
-              height={20}
-            />
-            Login with Google
-          </Button>
-
-          
-          <Button
-            variant="outline"
-            className="flex items-center justify-center gap-2"
             onClick={() => handleSocialLogin("github")}
           >
             {/* GitHub */}
@@ -134,6 +129,25 @@ export default function LoginForm() {
             Login with GitHub
           </Button>
 
+          <Button
+            variant="outline"
+            className="flex items-center justify-center gap-2"
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/dashboard",
+              })
+            }
+          >
+            {/* Google */}
+            <Image
+              src="https://img.icons8.com/color/24/google-logo.png"
+              alt="Google"
+              className="w-5 h-5"
+              width={20}
+              height={20}
+            />
+            Login with Google
+          </Button>
         </div>
         <p className="text-center text-sm text-gray-500 mt-4">
           Don’t have an account?{" "}
