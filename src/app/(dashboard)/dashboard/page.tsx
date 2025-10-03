@@ -1,8 +1,13 @@
-import {authOptions} from "@/components/helpers/authOptions"
-import {getServerSession} from "next-auth"
+//import {authOptions} from "@/components/helpers/authOptions"
+//import {getServerSession} from "next-auth"
+import { getUserSession } from "@/components/helpers/getUserSession.ts";
 
 export default async function DashboardHome() {
-  const session = await getServerSession(authOptions)
+  //const session = await getServerSession(authOptions)
+  const session = await getUserSession()
+
+
+  
   const quote = "The secret of getting ahead is getting started. – Mark Twain";
 
   return (
